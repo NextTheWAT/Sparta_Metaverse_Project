@@ -102,105 +102,109 @@ Stack 게임 내에서 점수를 기록하고, 최고 점수를 리더보드에 
 
 ## 📂 프로젝트 폴더 구조  
 
-02. Scripts/
-├── Base/
-│   └── BaseController.cs
-├── Camera/
-│   ├── CamaraZoom.cs
-│   └── FlollowCamera.cs
-├── Enemy/
-│   └── EnemyController.cs
-├── Entity/
-│   ├── AnimationHandler.cs
-│   ├── ResourceController.cs
-│   └── StatHandler.cs
-├── Manager/
-│   ├── EnemyManager.cs
-│   ├── GameManager.cs
-│   ├── LayerManager.cs
-│   ├── ProjectileManager.cs
-│   ├── SoundManager.cs
-│   └── UIManager.cs
-├── MiniMap/
-│   └── MiniMap_Size.cs
-├── NPC/
-│   ├── NPCController.cs
-│   ├── NPCResourceController.cs
-│   ├── NPCState.cs
-│   ├── NpcDialog.cs
-│   └── NpcLookAtPlayer.cs
-├── Player/
-│   └── PlayerController.cs
-├── Sound/
-│   └── SoundSource.cs
-├── TheStack/
-│   ├── DestroyZone.cs
-│   ├── Stack_UIManager.cs
-│   ├── TheStack.cs
-│   └── UI/
-│       ├── Stack_BaseUI.cs
-│       ├── Stack_GameUI.cs
-│       ├── Stack_HomeUI.cs
-│       └── Stack_ScoreUI.cs
-├── UI/
-│   ├── BaseUI.cs
-│   ├── GameOverUI.cs
-│   ├── GameUI.cs
-│   ├── HardGameOverUI.cs
-│   ├── HomeUI.cs
-│   ├── InteractionButton.cs
-│   └── ReturnToVillageButton.cs
-├── Weapon/
-│   ├── Handler/
-│   │   ├── MeleeWeaponHandler.cs
-│   │   └── WeaponHandler.cs
-│   ├── Muzzle_Flash/
-│   │   └── MuzzleFlash.cs
-│   ├── M4_WeaponHandler.cs
-│   ├── ProjectileController.cs
-│   └── RangeWeaponHandler.cs
-
-
+📦 02. Scripts/  
+├── 📂Base/  
+│   └── BaseController.cs  
+├── 📂Camera/  
+│   ├── CamaraZoom.cs  
+│   └── FlollowCamera.cs  
+├── 📂Enemy/  
+│   └── EnemyController.cs  
+├── 📂Entity/  
+│   ├── AnimationHandler.cs  
+│   ├── ResourceController.cs  
+│   └── StatHandler.cs  
+├── 📂Manager/  
+│   ├── EnemyManager.cs  
+│   ├── GameManager.cs  
+│   ├── LayerManager.cs  
+│   ├── ProjectileManager.cs  
+│   ├── SoundManager.cs  
+│   └── UIManager.cs    
+├── 📂MiniMap/  
+│   └── MiniMap_Size.cs  
+├── 📂NPC/    
+│   ├── NPCController.cs  
+│   ├── NPCResourceController.cs  
+│   ├── NPCState.cs  
+│   ├── NpcDialog.cs  
+│   └── NpcLookAtPlayer.cs  
+├── 📂Player/  
+│   └── PlayerController.cs    
+├── 📂Sound/  
+│   └── SoundSource.cs    
+├── 📂TheStack/  
+│   ├── DestroyZone.cs    
+│   ├── Stack_UIManager.cs    
+│   ├── TheStack.cs  
+│   └── 📂UI/    
+│       ├── Stack_BaseUI.cs    
+│       ├── Stack_GameUI.cs    
+│       ├── Stack_HomeUI.cs  
+│       └── Stack_ScoreUI.cs  
+├── 📂UI/  
+│   ├── BaseUI.cs  
+│   ├── GameOverUI.cs      
+│   ├── GameUI.cs  
+│   ├── HardGameOverUI.cs  
+│   ├── HomeUI.cs  
+│   ├── InteractionButton.cs    
+│   └── ReturnToVillageButton.cs  
+├── 📂Weapon/  
+│   ├── 📂Handler/  
+│   │   ├── MeleeWeaponHandler.cs  
+│   │   └── WeaponHandler.cs    
+│   ├── 📂Muzzle_Flash/      
+│   │   └── MuzzleFlash.cs    
+│   ├── M4_WeaponHandler.cs  
+│   ├── ProjectileController.cs  
+│   └── RangeWeaponHandler.cs  
   
 
 ## 👤 개발자
-| 이름 | 역할 |  
-| 이재은 | 전체 게임 설계, Unity 개발, 전투 시스템, UI 및 사운드 연동 |
-
-본 프로젝트는 내일배움캠프에서의 학습 내용을 바탕으로 직접 구현한 탑다운 슈팅 게임입니다.  
-설계부터 구현, 디버깅까지 혼자 해결하며 실전 개발 역량을 키웠습니다.
+이재은 (NextTheWAT)
+스파르타 코딩클럽 게임 개발 부트캠프 참가자
+Unity와 C#을 기반으로 2D/3D 게임을 제작하며, UI 시스템, 씬 전환, 캐릭터 제어, 리더보드 구현 등 다양한 기능을 직접 개발했습니다.
+주요 작업: 플레이어 시스템, NPC 대화, 총알 상쇄, UI 관리, 리더보드 등
 
 
 ## 🛠 트러블슈팅 (문제 해결 기록)
+1. ❌ 게임 오버 후 씬 재시작 시 상태가 초기화되지 않음
+- **문제정의**: 씬은 재시작되었는데 GameManager가 정상적으로 초기화되지 않아 게임이 시작되지 않음
+- **원인**: SceneManager.LoadScene()으로 씬만 재시작하고, GameManager.StartGame()을 따로 호출하지 않았음
+- **해결방법**: 씬 로드 이후에 GameManager.instance.StartGame()을 명시적으로 다시 호출함
+- **교훈**:  씬 전환만으로는 싱글톤 객체의 내부 상태까지 초기화되지 않기 때문에, 상태 초기화 코드를 명확히 호출해야 함
+- **대비책**:  씬 로드 직후 필요한 초기화 로직을 별도 함수로 분리하여 공통적으로 호출하도록 구조화함
+---
+2. ❌ NPC 상호작용 후 씬 이동이 안 됨
+- **문제정의**: 엘프와 F 키로 대화했는데 씬이 이동하지 않고 멈춰있음
+- **원인**: 대화 조건은 만족되었지만 SceneManager.LoadScene() 호출이 빠져 있었음
+- **해결방법**: 조건 분기 이후 명시적으로 SceneManager.LoadScene("TopDownScene") 호출하여 씬 전환 처리
+- **교훈**:  시나리오 흐름을 나눈다고 끝이 아니라, 실제 씬 이동 코드를 잊지 않고 연결해줘야 한다는 걸 다시 느낌
+- **대비책**:  씬 이동 조건을 담당하는 함수와 실제 전환 호출을 한 함수로 묶어 관리
+---
+3. ❌ NPC 사망 시 대사가 반복되지 않음
+- **문제정의**: NPC가 피격 후 사망한 뒤, 자동으로 출력되던 잡담 대사가 멈춤
+- **원인**: NPC 상태가 사망 상태로 고정되며, 대사 출력 함수 RandomChat()이 중단됨
+- **해결방법**: 사망 상태에서도 moodState에 따라 대사가 계속 출력되도록 조건 수정
+- **교훈**:  상태 변화 이후의 흐름도 미리 고려해서, 죽음 이후에도 "세계는 계속 돌아간다"는 걸 시스템에도 반영해야 함
+- **대비책**:  상태에 따른 출력 중단 여부를 명확히 구분해서 처리
+---
+4. ❌ 총알 상쇄가 작동하지 않음
+- **문제정의**: 플레이어 총알과 몬스터 총알이 충돌해도 서로 제거되지 않음
+- **원인**: OnTriggerEnter2D()에서 태그 또는 레이어 비교 조건 누락
+- **해결방법**: 충돌한 객체의 태그를 비교하여 Destroy(gameObject)를 명확하게 실행함
+- **교훈**:  충돌 조건을 제어할 땐 Tag, Layer, LayerCollision Matrix까지 반드시 확인해야 한다
+- **대비책**:  충돌 조건은 디버그 로그를 남겨가며 빠짐없이 체크하기
+---
+5. ❌ Stack 리더보드 점수가 덮어써짐
+- **문제정의**: Stack 게임 종료 후 현재 점수가 이전 최고 점수보다 낮아도 저장됨
+- **원인**: 점수 비교 없이 무조건 PlayerPrefs.SetInt()로 덮어쓰기함
+- **해결방법**: if (currentScore > bestScore) 조건을 추가해 더 높은 점수일 때만 갱신
+- **교훈**:  저장 로직에서도 "조건"을 잊지 말아야 하고, 무조건 저장은 실수로 이어질 수 있음
+- **대비책**: Set 전에 항상 Get해서 비교하고, UI에도 명확히 반영되도록 설계
+---
 
-### 1. ❌🏹 화살 투사체가 보이지 않던 문제
-- **문제정의**: 활을 쐈을 때 투사체(화살)가 생성되지만 화면에 보이지 않음
-- **원인**: ProjectileController 프리팹에 SpriteRenderer에 Sprite가 할당되어 있지 않았음
-- **해결방법**: SpriteRenderer에 적절한 화살 이미지(Sliced Sprite)를 연결함
-- **교훈**: 프리팹은 정상적으로 인스턴스화되어도 Sprite가 없으면 화면에 나타나지 않음
-- **대비책**: 프리팹 등록 시 SpriteRenderer의 Sprite와 Sorting Layer를 항상 확인할 것
----
-### 2. ❌🧟‍♂️ 몬스터가 생성되지 않던 문제
-- **문제정의**: EnemyManager에서 몬스터가 스폰되지 않음
-- **원인**: GameManager에서 EnemyManager.Init()은 호출되었지만 StartWave() 호출이 누락됨
-- **해결방법**: 게임 시작 시 StartWave()를 명시적으로 호출함
-- **교훈**: 매니저 간 호출 순서와 흐름 제어가 중요함
-- **대비책**: Init() → Start() 순서를 명확히 하고, 필수 트리거 함수 호출 여부를 점검할 것
----
-### 3. ❌🎮 Player 입력(Input)이 작동하지 않던 문제
-- **문제정의**: PlayerController에서 OnMove()가 정의되어 있음에도 캐릭터가 움직이지 않음
-- **원인**: Input Action 이름을 "Look"으로 설정해야 하는데, "Lock"으로 오타 작성됨
-- **해결방법**: Input Action 이름을 "Look"으로 정확히 수정함
-- **교훈**: Unity Input System은 함수명과 액션명이 정확히 일치해야 이벤트가 바인딩됨
-- **대비책**: Input System 사용 시 액션 이름과 메서드 이름이 정확히 일치하는지 확인할 것
----
-### 4. ❌🔊 AudioSource 컴포넌트 누락 예외
-- **문제정의**: SoundManager에서 AudioSource가 없다는 예외 발생 (MissingComponentException)
-- **원인**: SoundManager 오브젝트에 AudioSource 컴포넌트가 누락됨
-- **해결방법**: Unity 에디터에서 AudioSource를 수동으로 추가함
-- **교훈**: 필수 컴포넌트는 코드에서 접근 전에 반드시 붙어 있어야 함
-- **대비책**: [RequireComponent(typeof(AudioSource))]를 클래스에 추가또는 Awake()에서 null 체크하여 예외를 방지할 것
----
 
 ## 📌 앞으로 개선할 점
 - 🔁 적 종류 다양화 및 보스 몬스터 추가
